@@ -11,35 +11,20 @@
   <body>
     <br />
 
-    <label>
-      <input
-        type="radio"
-        name="payment-option"
-        value="paypal"
-        id="paypal-radio"
-        checked
-      />
-      <span id="paypal-mark"></span>
-    </label>
-
-    <label>
-      <input
-        id="ideal-radio"
-        value="ideal"
-        name="payment-option"
-        type="radio"
-      />
-      <span id="ideal-mark"></span>
-    </label>
-
-    <div id="ideal-fields"></div>
+   
+  
 
     <div id="paypal-btn"></div>
     <div id="ideal-btn"></div>
 
-    <script src="https://www.paypal.com/sdk/js?client-id=<%= clientId %>&components=buttons,payment-fields,marks,funding-eligibility&enable-funding=ideal&currency=EUR"></script>
+   
+
+    <script src="https://www.paypal.com/sdk/js?client-id=<%= clientId %>&components=buttons,payment-fields,marks,funding-eligibility&enable-funding=bancontact&currency=EUR"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" async></script>
 
     <script src="./index.js"></script>
+
+    <button id="get-order-btn" onclick="getOrder()">Get Order</button>
+    <button id="get-order-btn" onclick="captureOrder()">Capture Order</button>
   </body>
 </html>

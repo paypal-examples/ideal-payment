@@ -39,7 +39,7 @@ app.post("/api/orders", async (req, res) => {
   const { cart } = req.body;
 
   const { access_token } = await getAccessToken();
-  const { data } = await axios({
+  const { data, headers } = await axios({
     url: `${API_BASE}/v2/checkout/orders`,
     method: "post",
     headers: {
@@ -61,18 +61,42 @@ app.post("/api/orders", async (req, res) => {
   });
 
   console.log(`Order Created!`);
+  console.log(headers)
   res.json(data);
 
 
 });
 
 
+/**
+ * GET Order handler.
+ */
+app.get("/api/orders/:orderId", async (req, res) => {
+  // use the cart information passed from the front-end to calculate the purchase unit details
+  const { orderId } = req.params;
+
+  const { access_token } = await getAccessToken();
+  const { data, headers } = await axios({
+    url: `${API_BASE}/v2/checkout/orders/${orderId}`,
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${access_token}`,
+    }
+  });
+
+  console.log(`Order Fetched!`);
+  res.json({data, headers});
+
+});
+
 app.post("/api/orders/:orderId/capture", async (req, res) => {
   const { orderId } = req.params
 
   const { access_token } = await getAccessToken();
   
-  const { data } = await axios({
+  const { data , headers} = await axios({
     url: `${API_BASE}/v2/checkout/orders/${orderId}/capture`,
     method: "post",
     headers: {
@@ -83,7 +107,7 @@ app.post("/api/orders/:orderId/capture", async (req, res) => {
   });
 
   console.log(`💰 Payment captured!`);
-  res.json(data)
+  res.json({data, headers})
 });
 
 /**
