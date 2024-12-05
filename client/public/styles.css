@@ -45,3 +45,8 @@ label {
 #paypal-btn {
   margin-top: 1rem;
 }
+
+.buttonContainer{
+  display:flex;
+  justify-content: space-around;
+}

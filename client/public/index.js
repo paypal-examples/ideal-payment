@@ -8,8 +8,16 @@ async function getOrder(){
   return await fetch(`/api/orders/${orderID}`).then(res => res.json())
 }
 
+function clearOrder(){
+  orderID = undefined
+}
+
 function createOrder(data, actions) {
  
+  if(orderID){
+    return new Promise(resolve => resolve(orderID))
+  }
+  
   return fetch("/api/orders", {
     method: "post",
     // use the "body" param to optionally pass additional order information
@@ -54,11 +62,7 @@ paypal
       label: "pay",
       color: "silver",
     },
-    createOrder: () => {
-      if(orderID){
-        return new Promise(resolve => resolve(orderID))
-      }
-    },
+    createOrder: createOrder,
     onApprove(data, actions) {
       fetch(`/api/orders/${data.orderID}/capture`, {
         method: "post",
